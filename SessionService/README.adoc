@@ -1,0 +1,23 @@
+== Session Microservice Application
+
+Sample microservice provisioned using MicroProfile v2.2 and Java EE 8.0 that manages sessions and attendance for a conference event.
+
+Operations of this service include:
+
+. Create new sessions
+. List all existing sessions
+. List all sessions in an specific date
+. Get the data from a session from its ID
+. Delete existing sessions
+. Allow a user to register to an existing session
+. View all current registrations for any user
+
+== Configuration
+
+In order to correctly configure this service to verify signed tokens sent by clients, the following MicroProfile Configuration properties need to be correctly defined:
+
+[source, properties]
+----
+mp.jwt.verify.publickey.location=https://<your-domain>.auth0.com/.well-known/jwks.json
+mp.jwt.verify.issuer=https://<your-domain>.auth0.com/
+----

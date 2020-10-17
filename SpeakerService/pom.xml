@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fish.payara.demos</groupId>
+        <artifactId>OktaConferenceApp</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <groupId>fish.payara.support</groupId>
+    <artifactId>SpeakerService</artifactId>
+    <version>1.0.0</version>
+    <packaging>war</packaging>
+
+    <name>SpeakerService</name>
+
+    <properties>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <version.javaee>8.0</version.javaee>
+        <version.microprofile>2.2</version.microprofile>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>${version.javaee}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.microprofile</groupId>
+            <artifactId>microprofile</artifactId>
+            <version>${version.microprofile}</version>
+            <scope>provided</scope>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>microservice-speaker</finalName>
+        <plugins>
+            <plugin>
+                <groupId>fish.payara.maven.plugins</groupId>
+                <artifactId>payara-micro-maven-plugin</artifactId>
+                <version>1.0.5</version>
+                <configuration>
+                    <payaraVersion>${version.payara}</payaraVersion>
+                    <deployWar>false</deployWar>
+                    <commandLineOptions>
+                        <option>
+                            <key>--port</key>
+                            <value>${conference.service.speaker.port}</value>
+                        </option>
+                        <option>
+                            <key>--noCluster</key>
+                        </option>
+                        <option>
+                            <key>--deploy</key>
+                            <value>${project.build.directory}/${project.build.finalName}</value>
+                        </option>
+                    </commandLineOptions>
+                    <contextRoot>"/"</contextRoot>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

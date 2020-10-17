@@ -1,0 +1,44 @@
+= Conference Application Demo
+
+This is a small application demo used to showcase integration with the Okta service platform to secure a microservices architecture provisioned using the MicroProfile framework.
+This application domain is to manage the speakers and session talks for a conference event.
+
+This application is composed of:
+
+* 2 microservices applications:
+** A `speaker` microservice used to manage the speakers that will talk at the event.
+** A `session` microservice used to manage the session talks held at the event.
+* A small web application designed as an **Angular SPA** that uses the previous microservices.
+
+== Business Domain
+
+Users that access this application should follow into the next 3 roles:
+
+`Admin`:: Administrators of the conference event. They can:
++
+. Create new session talks
+. View all session talks
+. Delete session talks
+. View all registered speakers
+. Accept speakers into the conference.
+
+`Speaker`:: Speakers of talks at the event. They can:
++
+. View all fellow speakers
+. Register themselves as speakers
+
+`Attendee`:: Attendees of the event. They can:
++
+. View all speakers registered
+. View all session talks
+. Attend a session if interested
+
+// TODO - Document running `conference-app`
+
+The microservices are configured as Maven projects and can be launched from the command line using the Payara Micro Maven plugin like this:
+
+[source, shell]
+----
+mvn clean install
+mvn payara-micro:start
+----

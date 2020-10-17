@@ -1,0 +1,58 @@
+<div class="nav-container">
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <div class="container">
+      <div class="navbar-brand micro-logo"></div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a routerLink="/" class="nav-link route-link">Home</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/sessions" class="nav-link route-link" *ngIf="isAuthenticated">
+              <i class="fa fa-chalkboard-teacher"></i> Talk Sessions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/speakers" class="nav-link route-link" *ngIf="isAuthenticated">
+              <i class="fa fa-user-tie"></i> Speakers
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav d-none d-md-block">
+          <li class="nav-item" *ngIf="!isAuthenticated">
+            <button class="btn btn-primary btn-margin" (click)="login()">
+              Log in
+            </button>
+          </li>
+
+          <!-- Fullsize dropdown: show if authenticated -->
+          <li class="nav-item dropdown hidden" *ngIf="isAuthenticated">
+            <a class="nav-link dropdown-toggle"data-toggle="dropdown">
+              <!-- Profile image should be set to the profile picture from the id token -->
+              <img alt="Profile picture" class="nav-user-profile profile-image rounded-circle" width="50" />
+            </a>
+            <div class="dropdown-menu">
+              <!-- Show the user's full name from the id token here -->
+              <div class="dropdown-header nav-user-name user-name"></div>
+              <a routerLink="/profile" class="dropdown-item dropdown-profile route-link">
+                <i class="fas fa-user mr-3"></i> Profile
+              </a>
+              <!--a class="dropdown-item dropdown-profile route-link">
+                <i class="fas fa-user mr-3"></i> Access Token
+              </a-->
+              <a class="dropdown-item" (click)="logout()">
+                <i class="fas fa-power-off mr-3"></i> Log out
+              </a>
+            </div>
+          </li>
+          <!-- /Fullsize dropdown -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

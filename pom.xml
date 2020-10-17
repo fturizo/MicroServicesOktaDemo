@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>fish.payara.demos</groupId>
+    <artifactId>OktaConferenceApp</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>ConferenceWebApplication</module>
+        <module>SessionService</module>
+        <module>SpeakerService</module>
+    </modules>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <version.payara>5.193.1</version.payara>
+        
+        <conference.service.webapp.port>8000</conference.service.webapp.port>
+        <conference.service.session.port>8080</conference.service.session.port>
+        <conference.service.speaker.port>8081</conference.service.speaker.port>
+    </properties>
+</project>

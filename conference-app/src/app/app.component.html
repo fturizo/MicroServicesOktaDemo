@@ -1,0 +1,15 @@
+<div class="h-100 d-flex flex-column">
+  <app-top-bar [isAuthenticated]="isAuthenticated"></app-top-bar>
+  <div id="main-content" class="container mt-5 flex-grow-1">
+    <div id="alerts"></div>
+    <div class="page" id="content-profile">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <footer class="bg-light text-center p-5">
+    <div class="logo"></div>
+    <p>
+      Powered by <a href="#">Okta</a>
+    </p>
+  </footer>
+</div>
