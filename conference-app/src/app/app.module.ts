@@ -13,6 +13,7 @@ import { SessionsComponent } from './sessions/sessions.component';
 
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
     OktaAuthModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule
   ],
   providers: [
     {provide: OKTA_CONFIG, useValue: config.okta}

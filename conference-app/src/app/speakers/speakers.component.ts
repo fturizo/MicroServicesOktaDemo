@@ -3,7 +3,7 @@ import config from  '../app.config';
 import {OktaAuthService} from "@okta/okta-angular";
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder} from "@angular/forms";
-import {$} from "protractor";
+import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 
 export interface Speaker{
   id: number;
@@ -20,8 +20,12 @@ export interface Speaker{
 export class SpeakersComponent implements OnInit {
 
   speakers: Array<Speaker>[];
+  currentModal: NgbModalRef;
   registerForm;
-  constructor(public authService: OktaAuthService, private http: HttpClient, private formBuilder: FormBuilder) {
+  constructor(public authService: OktaAuthService,
+              private http: HttpClient,
+              private formBuilder: FormBuilder,
+              private modalService: NgbModal) {
     this.speakers = [];
     this.registerForm = formBuilder.group({
       name: '',
@@ -40,17 +44,33 @@ export class SpeakersComponent implements OnInit {
     });
   }
 
-  acceptSpeaker(speaker: Speaker): void {
-
+  async acceptSpeaker(speaker: Speaker): Promise<void> {
+    const token = await this.authService.getAccessToken();
+    this.http.post(config.serviceURLs.speaker + `speaker/accept/${speaker.id}`,{},{
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      observe: "response"
+    }).subscribe(response => {
+      if(response.status == 202){
+        this.resetSpeakers();
+        alert('Speaker accepted successfully');
+      }else if(response.status == 403){
+        alert('Not authorized to accept speakers');
+      }
+    });
   }
 
-  async openRegisterSpeaker(){
+  async openRegisterSpeaker(speakerTemplate){
     const userClaims = await this.authService.getUser();
     this.registerForm.patchValue({
       name : userClaims.name,
       organization: ''
     });
-    //$('#registerSpeakerModal').modal('show');
+    this.currentModal = this.modalService.open(speakerTemplate, {
+      centered: true,
+      ariaLabelledBy: 'modal-basic-title'
+    });
   }
 
   async registerSpeaker(data : Speaker){
@@ -63,11 +83,18 @@ export class SpeakersComponent implements OnInit {
       observe: "response"
     }).subscribe((response) => {
       if(response.status == 201){
+        this.resetSpeakers();
         this.registerForm.reset();
-
-      }else{
-
+        this.currentModal.dismiss();
+      }else if(response.status == 403){
+        //TODO - Put proper alert!
+        alert('Not authorized to add yourself as a speaker');
       }
     });
+  }
+
+  private async resetSpeakers(){
+    this.speakers = [];
+    await this.ngOnInit();
   }
 }
