@@ -5,5 +5,9 @@ export default {
     redirectUri: 'http://localhost:4200/login/callback',
     scopes: ['openid', 'profile', 'email'],
     pkce: true
+  },
+  serviceURLs:{
+    speaker: 'http://localhost:8881/',
+    session: 'http://localhost:8882/'
   }
 };

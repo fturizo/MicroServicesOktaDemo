@@ -18,4 +18,12 @@ export class AppComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     this.isAuthenticated = await this.authService.isAuthenticated();
   }
+
+  login(): void {
+    this.authService.loginRedirect();
+  }
+
+  logout(): void {
+    this.authService.logout('/');
+  }
 }
