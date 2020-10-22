@@ -44,16 +44,16 @@
                 <artifactId>payara-micro-maven-plugin</artifactId>
                 <version>1.1.0</version>
                 <configuration>
-                    <payaraVersion>${version.payara}</payaraVersion>
-                    <deployWar>false</deployWar>
+                    <payaraMicroAbsolutePath>../payara-micro-5.2020.5-patched.jar</payaraMicroAbsolutePath>
+                    <deployWar>true</deployWar>
                     <javaCommandLineOptions>
                         <option>
                             <key>-Dmp.jwt.verify.publickey.location</key>
-                            <value>https://payara.auth0.com/.well-known/jwks.json</value>
+                            <value>https://dev-298855.okta.com/oauth2/default/v1/keys</value>
                         </option>
                         <option>
                             <key>-Dmp.jwt.verify.issuer</key>
-                            <value>https://payara.auth0.com/</value>
+                            <value>https://dev-298855.okta.com/oauth2/default</value>
                         </option>
                     </javaCommandLineOptions>
                     <commandLineOptions>
@@ -63,10 +63,6 @@
                         </option>
                         <option>
                             <key>--noCluster</key>
-                        </option>
-                        <option>
-                            <key>--deploy</key>
-                            <value>${project.build.directory}/${project.build.finalName}</value>
                         </option>
                     </commandLineOptions>
                     <contextRoot>"/"</contextRoot>

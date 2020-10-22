@@ -17,7 +17,7 @@
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <version.javaee>8.0</version.javaee>
-        <version.microprofile>2.2</version.microprofile>
+        <version.microprofile>3.3</version.microprofile>
     </properties>
     
     <dependencies>
@@ -42,10 +42,10 @@
             <plugin>
                 <groupId>fish.payara.maven.plugins</groupId>
                 <artifactId>payara-micro-maven-plugin</artifactId>
-                <version>1.0.5</version>
+                <version>1.1.0</version>
                 <configuration>
-                    <payaraVersion>${version.payara}</payaraVersion>
-                    <deployWar>false</deployWar>
+                    <payaraMicroAbsolutePath>../payara-micro-5.2020.5-patched.jar</payaraMicroAbsolutePath>
+                    <deployWar>true</deployWar>
                     <commandLineOptions>
                         <option>
                             <key>--port</key>
@@ -54,12 +54,8 @@
                         <option>
                             <key>--noCluster</key>
                         </option>
-                        <option>
-                            <key>--deploy</key>
-                            <value>${project.build.directory}/${project.build.finalName}</value>
-                        </option>
                     </commandLineOptions>
-                    <contextRoot>"/"</contextRoot>
+                    <contextRoot>/</contextRoot>
                 </configuration>
             </plugin>
         </plugins>
