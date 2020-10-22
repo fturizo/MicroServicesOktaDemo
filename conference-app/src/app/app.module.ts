@@ -14,6 +14,8 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { MessagesComponent } from './messages/messages.component';
+import { HIGHLIGHT_OPTIONS, HighlightModule } from "ngx-highlightjs";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -29,7 +31,8 @@ const routes: Routes = [
     HomeComponent,
     ProfileComponent,
     SpeakersComponent,
-    SessionsComponent
+    SessionsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -38,10 +41,16 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgbModule
+    NgbModule,
+    HighlightModule
   ],
   providers: [
-    {provide: OKTA_CONFIG, useValue: config.okta}
+    {provide: OKTA_CONFIG, useValue: config.okta},
+    {
+      provide: HIGHLIGHT_OPTIONS, useValue: {
+        fullLibraryLoader: () => import('highlight.js')
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })

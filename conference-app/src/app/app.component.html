@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container">
         <div class="navbar-brand micro-logo"></div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -33,7 +33,8 @@
 
             <li class="nav-item dropdown hidden" *ngIf="isAuthenticated">
               <a class="nav-link dropdown-toggle"data-toggle="dropdown">
-                <img alt="Profile picture" class="nav-user-profile profile-image rounded-circle" width="50" />
+                <img alt="Profile picture" class="nav-user-profile profile-image rounded-circle img-thumbnail" width="50"
+                     src="assets/images/profile-picture.png"/>
               </a>
               <div class="dropdown-menu">
                 <div class="dropdown-header nav-user-name user-name"></div>
@@ -51,13 +52,12 @@
     </nav>
   </div>
   <div id="main-content" class="container mt-5 flex-grow-1">
-    <div id="alerts"></div>
+    <app-messages></app-messages>
     <div class="page" id="content-profile">
       <router-outlet></router-outlet>
     </div>
   </div>
   <footer class="bg-light text-center p-5">
-    <div class="logo"></div>
     <p>
       Powered by <a href="#">Okta</a>
     </p>

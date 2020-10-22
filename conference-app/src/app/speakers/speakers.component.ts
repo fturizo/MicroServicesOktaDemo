@@ -3,13 +3,15 @@ import config from  '../app.config';
 import {OktaAuthService} from "@okta/okta-angular";
 import {HttpClient} from "@angular/common/http";
 import {FormBuilder} from "@angular/forms";
-import {NgbActiveModal, NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
+import {MessagesService} from "../messages.service";
 
 export interface Speaker{
   id: number;
   name: string;
   organization: string;
   accepted: boolean;
+  identity: string;
 }
 
 @Component({
@@ -19,13 +21,15 @@ export interface Speaker{
 })
 export class SpeakersComponent implements OnInit {
 
-  speakers: Array<Speaker>[];
+  speakers: Array<Speaker>;
+  isUserRegistered: boolean;
   currentModal: NgbModalRef;
   registerForm;
   constructor(public authService: OktaAuthService,
               private http: HttpClient,
               private formBuilder: FormBuilder,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private messagesService : MessagesService) {
     this.speakers = [];
     this.registerForm = formBuilder.group({
       name: '',
@@ -38,10 +42,23 @@ export class SpeakersComponent implements OnInit {
     this.http.get(config.serviceURLs.speaker + 'speaker/all', {
       headers: {
         Authorization: `Bearer ${token}`
+      },
+      observe: "response"
+    }).subscribe(response => {
+      if(response.status == 202){
+        [].push.apply(this.speakers, response.body);
+        this.checkIfUserRegistered();
       }
-    }).subscribe((data: Array<Speaker>) => {
-      [].push.apply(this.speakers, data);
+    }, error => {
+      if(error.status == 403) {
+        this.messagesService.addMessage('danger', 'Not authorized to view speakers');
+      }
     });
+  }
+
+  private async checkIfUserRegistered(){
+    const user = await this.authService.getUser();
+    this.isUserRegistered = this.speakers.findIndex(speaker => speaker.identity == user.sub) > -1;
   }
 
   async acceptSpeaker(speaker: Speaker): Promise<void> {
@@ -54,9 +71,11 @@ export class SpeakersComponent implements OnInit {
     }).subscribe(response => {
       if(response.status == 202){
         this.resetSpeakers();
-        alert('Speaker accepted successfully');
-      }else if(response.status == 403){
-        alert('Not authorized to accept speakers');
+        this.messagesService.addMessage('success','Speaker accepted successfully');
+      }
+    }, error => {
+      if(error.status == 403){
+        this.messagesService.addMessage('danger','Not authorized to accept speakers');
       }
     });
   }
@@ -86,9 +105,12 @@ export class SpeakersComponent implements OnInit {
         this.resetSpeakers();
         this.registerForm.reset();
         this.currentModal.dismiss();
-      }else if(response.status == 403){
-        //TODO - Put proper alert!
-        alert('Not authorized to add yourself as a speaker');
+        this.messagesService.addMessage('success','You are registered as a speaker');
+      }
+    }, error => {
+      if(error.status == 403){
+        this.currentModal.dismiss();
+        this.messagesService.addMessage('danger','Not authorized to add yourself as a speaker');
       }
     });
   }

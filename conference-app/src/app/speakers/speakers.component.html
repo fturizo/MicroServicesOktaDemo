@@ -1,7 +1,8 @@
 <div class="container">
   <p>
     <!--Disable button if already registered-->
-    <button class="btn btn-primary" (click)="openRegisterSpeaker(speakerDialog)">
+    <button class="btn btn-primary" (click)="openRegisterSpeaker(speakerDialog)"
+            [disabled]="isUserRegistered">
       Register Myself as Speaker <i class="fa fa-plus-circle"></i>
     </button>
   </p>
@@ -22,14 +23,15 @@
         <td>{{speaker.organization}}</td>
         <td>
           <span class="badge badge-success" *ngIf="speaker.accepted">
-            <i class="fa fa-check-double">Accepted!</i>
+            <i class="fa fa-check-double"></i>Accepted!
           </span>
           <span class="badge badge-secondary" *ngIf="!speaker.accepted">
-            <i class="fa fa-question">Still Pending</i>
+            <i class="fa fa-question"></i>Still Pending
           </span>
         </td>
         <td>
-          <button class="btn btn-primary" (click)="acceptSpeaker(speaker)" [disabled]="speaker.accepted">
+          <button class="btn btn-primary" (click)="acceptSpeaker(speaker)" [disabled]="speaker.accepted"
+                  ngbTooltip="Accept Speaker">
             <i class="fa fa-user-check"></i>
           </button>
         </td>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {OktaAuthService} from '@okta/okta-angular';
+import {OktaAuthService, UserClaims} from '@okta/okta-angular';
 
 @Component({
   selector: 'app-profile',
@@ -7,14 +7,15 @@ import {OktaAuthService} from '@okta/okta-angular';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userName: string;
-  fullName: string;
+  name: string;
+  email: string;
+  idToken: string;
   constructor(public authService: OktaAuthService) { }
 
   async ngOnInit(): Promise<void> {
-    const userClaims = await this.authService.getUser();
-    this.userName = userClaims.sub;
-    this.fullName = userClaims.name;
+    const idClaims  = await this.authService.getUser();
+    this.name = idClaims.name;
+    this.email = idClaims.email;
+    this.idToken = JSON.stringify(idClaims, null, "  ");
   }
-
 }
