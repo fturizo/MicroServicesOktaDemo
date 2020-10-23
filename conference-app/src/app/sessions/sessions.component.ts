@@ -117,7 +117,7 @@ export class SessionsComponent implements OnInit {
       }
     }).subscribe(() => {
       this.resetSessions();
-      this.messagesService.addMessage('success', 'You are attending this session');
+      this.messagesService.addMessage('success', `You are attending the "${session.title}" session`);
     }, error => {
       if(error.status == 403){
         this.messagesService.addMessage("danger", 'Not authorized to attend sessions');

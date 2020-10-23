@@ -20,7 +20,9 @@ export class AppComponent implements OnInit{
   }
 
   login(): void {
-    this.authService.loginRedirect();
+    this.authService.loginRedirect(null, {
+      prompt: 'login'
+    });
   }
 
   logout(): void {
