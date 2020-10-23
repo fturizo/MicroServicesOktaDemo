@@ -10,6 +10,9 @@ This application is composed of:
 ** A `session` microservice used to manage the session talks held at the event.
 * A small web application designed as an **Angular SPA** that uses the previous microservices.
 
+WARNING: JWT validation doesn't work correctly in the current Payara Platform release *5.2020.5*. Fixes are expected to come
+for the next release and this project will be updated to clarify it as such.
+
 == Business Domain
 
 Users that access this application should follow into the next 3 roles:
