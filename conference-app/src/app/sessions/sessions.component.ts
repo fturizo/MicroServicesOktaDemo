@@ -46,13 +46,10 @@ export class SessionsComponent implements OnInit {
     this.http.get(config.serviceURLs.session + 'session/all', {
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      observe: "response"
-    }).subscribe((response) => {
-      if(response.status == 200) {
-        [].push.apply(this.sessions, response.body);
-        this.loadRegisteredIds(token);
       }
+    }).subscribe((data: Array<Session>) => {
+      [].push.apply(this.sessions, data);
+      this.loadRegisteredIds(token);
     }, error => {
       if(error.status == 403){
         this.messagesService.addMessage("danger", "Not authorized to view sessions");
@@ -89,7 +86,6 @@ export class SessionsComponent implements OnInit {
 
   async createSession(data){
     const token = await this.authService.getAccessToken();
-    console.log(data);
     this.http.post(config.serviceURLs.session + 'session/', {
       title: data.title,
       venue: data.venue,
@@ -99,15 +95,12 @@ export class SessionsComponent implements OnInit {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
-      },
-      observe: "response"
-    }).subscribe((response) => {
-      if(response.status == 201){
-        this.resetSessions();
-        this.createForm.reset();
-        this.currentModal.dismiss();
-        this.messagesService.addMessage('success','Successfully added new session');
       }
+    }).subscribe(() => {
+      this.resetSessions();
+      this.createForm.reset();
+      this.currentModal.dismiss();
+      this.messagesService.addMessage('success','Successfully added new session');
     }, error => {
       if(error.status == 403){
         this.currentModal.dismiss();
@@ -121,13 +114,10 @@ export class SessionsComponent implements OnInit {
     this.http.post(config.serviceURLs.session + `register/${session.id}`, {}, {
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      observe: "response"
-    }).subscribe((response) => {
-      if(response.status == 200) {
-        this.resetSessions();
-        this.messagesService.addMessage('success', 'You are attending this session');
       }
+    }).subscribe(() => {
+      this.resetSessions();
+      this.messagesService.addMessage('success', 'You are attending this session');
     }, error => {
       if(error.status == 403){
         this.messagesService.addMessage("danger", 'Not authorized to attend sessions');
@@ -142,11 +132,9 @@ export class SessionsComponent implements OnInit {
         Authorization: `Bearer ${token}`
       },
       observe: "response"
-    }).subscribe((response) => {
-      if(response.status == 202) {
-        this.resetSessions();
-        this.messagesService.addMessage('success', 'Session deleted successfully');
-      }
+    }).subscribe(() => {
+      this.resetSessions();
+      this.messagesService.addMessage('success', 'Session deleted successfully');
     }, error => {
       if(error.status == 403){
         this.messagesService.addMessage("danger", "Not authorized to delete sessions");

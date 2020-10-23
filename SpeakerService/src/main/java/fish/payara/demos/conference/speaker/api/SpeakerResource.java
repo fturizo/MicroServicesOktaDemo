@@ -2,11 +2,15 @@ package fish.payara.demos.conference.speaker.api;
 
 import fish.payara.demos.conference.speaker.entitites.Speaker;
 import fish.payara.demos.conference.speaker.services.SpeakerService;
+import org.eclipse.microprofile.jwt.Claim;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -41,6 +45,10 @@ public class SpeakerResource {
     @Context
     SecurityContext securityContext;
 
+    @Inject
+    @Claim("groups")
+    Instance<Set<String>> currentGroups;
+
     @GET
     @Path("/{id}")
     public Response getSpeaker(@PathParam("id") Integer id) {
@@ -59,8 +67,8 @@ public class SpeakerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addSpeaker(Speaker speaker, @Context UriInfo uriInfo) {
-        //TODO - Not working correctly, check
-        if(securityContext.isUserInRole("Speaker")){
+        if(currentGroups.get().contains("Speaker")){
+        //if(securityContext.isUserInRole("Speaker")){
             speaker.setIdentity(securityContext.getUserPrincipal().getName());
         }
         Speaker result = speakerService.save(speaker);

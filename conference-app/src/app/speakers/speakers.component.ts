@@ -42,13 +42,10 @@ export class SpeakersComponent implements OnInit {
     this.http.get(config.serviceURLs.speaker + 'speaker/all', {
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      observe: "response"
-    }).subscribe(response => {
-      if(response.status == 202){
-        [].push.apply(this.speakers, response.body);
-        this.checkIfUserRegistered();
       }
+    }).subscribe((data: Array<Speaker>) => {
+      [].push.apply(this.speakers, data);
+      this.checkIfUserRegistered();
     }, error => {
       if(error.status == 403) {
         this.messagesService.addMessage('danger', 'Not authorized to view speakers');
@@ -66,13 +63,10 @@ export class SpeakersComponent implements OnInit {
     this.http.post(config.serviceURLs.speaker + `speaker/accept/${speaker.id}`,{},{
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      observe: "response"
-    }).subscribe(response => {
-      if(response.status == 202){
-        this.resetSpeakers();
-        this.messagesService.addMessage('success','Speaker accepted successfully');
       }
+    }).subscribe(() => {
+      this.resetSpeakers();
+      this.messagesService.addMessage('success','Speaker accepted successfully');
     }, error => {
       if(error.status == 403){
         this.messagesService.addMessage('danger','Not authorized to accept speakers');
@@ -98,15 +92,12 @@ export class SpeakersComponent implements OnInit {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
-      },
-      observe: "response"
-    }).subscribe((response) => {
-      if(response.status == 201){
-        this.resetSpeakers();
-        this.registerForm.reset();
-        this.currentModal.dismiss();
-        this.messagesService.addMessage('success','You are registered as a speaker');
       }
+    }).subscribe(() => {
+      this.resetSpeakers();
+      this.registerForm.reset();
+      this.currentModal.dismiss();
+      this.messagesService.addMessage('success','You are registered as a speaker');
     }, error => {
       if(error.status == 403){
         this.currentModal.dismiss();
