@@ -1,6 +1,6 @@
 == Speaker Microservice Application
 
-Sample microservice provisioned using MicroProfile v2.2 and Java EE 8.0 that manages speakers for a conference event.
+Sample microservice provisioned using MicroProfile v3.0 and Jakarta EE 8.0 that manages speakers for a conference event.
 
 Operations of this service include:
 
@@ -16,6 +16,6 @@ In order to correctly configure this service to verify signed tokens sent by cli
 
 [source, properties]
 ----
-mp.jwt.verify.publickey.location=https://<your-domain>.auth0.com/.well-known/jwks.json
-mp.jwt.verify.issuer=https://<your-domain>.auth0.com/
+mp.jwt.verify.publickey.location=https://<your-domain>.okta.com/oauth2/default/v1/keys
+mp.jwt.verify.issuer=https://<your-domain>.okta.com/oauth2/default/
 ----
