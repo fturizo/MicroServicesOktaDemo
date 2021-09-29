@@ -2,6 +2,8 @@ package fish.payara.demos.conference.session.api;
 
 import fish.payara.demos.conference.session.entities.Session;
 import fish.payara.demos.conference.session.services.SessionService;
+import org.eclipse.microprofile.jwt.JsonWebToken;
+
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;

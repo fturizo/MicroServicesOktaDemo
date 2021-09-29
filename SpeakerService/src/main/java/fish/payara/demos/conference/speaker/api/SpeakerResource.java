@@ -67,8 +67,8 @@ public class SpeakerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addSpeaker(Speaker speaker, @Context UriInfo uriInfo) {
-        if(currentGroups.get().contains("Speaker")){
-        //if(securityContext.isUserInRole("Speaker")){
+        //if(currentGroups.get().contains("Speaker")){
+        if(securityContext.isUserInRole("Speaker")){
             speaker.setIdentity(securityContext.getUserPrincipal().getName());
         }
         Speaker result = speakerService.save(speaker);
