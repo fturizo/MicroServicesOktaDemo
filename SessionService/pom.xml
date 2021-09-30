@@ -45,11 +45,15 @@
                     <javaCommandLineOptions>
                         <option>
                             <key>-Dmp.jwt.verify.publickey.location</key>
-                            <value>https://dev-298855.okta.com/oauth2/default/v1/keys</value>
+                            <value>https://dev-298855.okta.com/oauth2/aus4mr92gy4CPjq4J4x7/v1/keys</value>
                         </option>
                         <option>
                             <key>-Dmp.jwt.verify.issuer</key>
-                            <value>https://dev-298855.okta.com/oauth2/default</value>
+                            <value>https://dev-298855.okta.com/aus4mr92gy4CPjq4J4x7/default</value>
+                        </option>
+                        <option>
+                            <key>-Dmp.jwt.verify.audiences</key>
+                            <value>api://conference.payara.fish</value>
                         </option>
                     </javaCommandLineOptions>
                     <commandLineOptions>
