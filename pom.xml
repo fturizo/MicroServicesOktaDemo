@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <jakarta.ee.version>8.0.0</jakarta.ee.version>
+        <jakarta.ee.version>9.1.0</jakarta.ee.version>
         <eclipse.microprofile.version>4.1</eclipse.microprofile.version>
         <payara.version>5.2021.7</payara.version>
         <conference.service.speaker.port>8881</conference.service.speaker.port>

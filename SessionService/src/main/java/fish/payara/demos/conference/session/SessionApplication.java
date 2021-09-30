@@ -1,9 +1,9 @@
 package fish.payara.demos.conference.session;
 
-import javax.annotation.security.DeclareRoles;
-import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
 import org.eclipse.microprofile.auth.LoginConfig;
 
 /**
