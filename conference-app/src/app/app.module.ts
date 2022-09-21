@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import config from './app.config';
@@ -11,11 +11,11 @@ import { ProfileComponent } from './profile/profile.component';
 import { SpeakersComponent } from './speakers/speakers.component';
 import { SessionsComponent } from './sessions/sessions.component';
 
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MessagesComponent } from './messages/messages.component';
-import { HIGHLIGHT_OPTIONS, HighlightModule } from "ngx-highlightjs";
+import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -38,7 +38,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     OktaAuthModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     ReactiveFormsModule,
     BrowserAnimationsModule,
     NgbModule,
