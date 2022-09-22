@@ -24,8 +24,8 @@ export class MessagesService {
   }
 
   removeMessage(id: number): void {
-    const index = this.messages.findIndex((detail) => detail.id == id);
-    if(index > -1){
+    const index = this.messages.findIndex((detail) => detail.id === id);
+    if (index > -1){
       this.messages.splice(index, 1);
     }
   }

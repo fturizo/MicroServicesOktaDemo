@@ -6,7 +6,7 @@ export default {
     scopes: ['openid', 'profile', 'email'],
     pkce: true,
   },
-  serviceURLs:{
+  serviceURLs: {
     speaker: 'http://localhost:8881/',
     session: 'http://localhost:8882/'
   }

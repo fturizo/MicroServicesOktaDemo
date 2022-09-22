@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import config from  '../app.config';
-import {OktaAuthService} from "@okta/okta-angular";
-import {HttpClient} from "@angular/common/http";
-import {FormBuilder} from "@angular/forms";
-import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
-import {MessagesService} from "../messages.service";
+import config from '../app.config';
+import {OktaAuthService} from '@okta/okta-angular';
+import {HttpClient} from '@angular/common/http';
+import {FormBuilder} from '@angular/forms';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {MessagesService} from '../messages.service';
 
 export interface Speaker{
   id: number;
@@ -29,7 +29,7 @@ export class SpeakersComponent implements OnInit {
               private http: HttpClient,
               private formBuilder: FormBuilder,
               private modalService: NgbModal,
-              private messagesService : MessagesService) {
+              private messagesService: MessagesService) {
     this.speakers = [];
     this.registerForm = formBuilder.group({
       name: '',
@@ -47,34 +47,34 @@ export class SpeakersComponent implements OnInit {
       [].push.apply(this.speakers, data);
       this.checkIfUserRegistered();
     }, error => {
-      if(error.status == 403) {
+      if (error.status === 403) {
         this.messagesService.addMessage('danger', 'Not authorized to view speakers');
       }
     });
   }
 
-  private async checkIfUserRegistered(){
+  private async checkIfUserRegistered(): Promise<void>{
     const user = await this.authService.getUser();
-    this.isUserRegistered = this.speakers.findIndex(speaker => speaker.identity == user.sub) > -1;
+    this.isUserRegistered = this.speakers.findIndex(speaker => speaker.identity === user.sub) > -1;
   }
 
   async acceptSpeaker(speaker: Speaker): Promise<void> {
     const token = await this.authService.getAccessToken();
-    this.http.post(config.serviceURLs.speaker + `speaker/accept/${speaker.id}`,{},{
+    this.http.post(config.serviceURLs.speaker + `speaker/accept/${speaker.id}`, {}, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     }).subscribe(() => {
       this.resetSpeakers();
-      this.messagesService.addMessage('success','Speaker accepted successfully');
+      this.messagesService.addMessage('success', 'Speaker accepted successfully');
     }, error => {
-      if(error.status == 403){
-        this.messagesService.addMessage('danger','Not authorized to accept speakers');
+      if (error.status === 403){
+        this.messagesService.addMessage('danger', 'Not authorized to accept speakers');
       }
     });
   }
 
-  async openRegisterSpeaker(speakerTemplate){
+  async openRegisterSpeaker(speakerTemplate): Promise<void>{
     const userClaims = await this.authService.getUser();
     this.registerForm.patchValue({
       name : userClaims.name,
@@ -86,27 +86,27 @@ export class SpeakersComponent implements OnInit {
     });
   }
 
-  async registerSpeaker(data : Speaker){
+  async registerSpeaker(data: Speaker): Promise<void>{
     const token = await this.authService.getAccessToken();
     this.http.post(config.serviceURLs.speaker + 'speaker/', data, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json'
       }
     }).subscribe(() => {
       this.resetSpeakers();
       this.registerForm.reset();
       this.currentModal.dismiss();
-      this.messagesService.addMessage('success','You are registered as a speaker');
+      this.messagesService.addMessage('success', 'You are registered as a speaker');
     }, error => {
-      if(error.status == 403){
+      if (error.status === 403){
         this.currentModal.dismiss();
-        this.messagesService.addMessage('danger','Not authorized to add yourself as a speaker');
+        this.messagesService.addMessage('danger', 'Not authorized to add yourself as a speaker');
       }
     });
   }
 
-  private async resetSpeakers(){
+  private async resetSpeakers(): Promise<void>{
     this.speakers = [];
     await this.ngOnInit();
   }
