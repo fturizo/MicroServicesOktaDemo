@@ -3,6 +3,8 @@
 This is a small application demo used to showcase integration with the Okta service platform to secure a microservices architecture provisioned using the MicroProfile framework.
 This application domain is to manage the speakers and session talks for a conference event.
 
+IMPORTANT: The Okta domain used by this application is `dev-298855.okta.com`. Access to its admin dashboard link:https://dev-298855-admin.okta.com/admin/dashboard[here]
+
 This application is composed of:
 
 * 2 microservices applications:
