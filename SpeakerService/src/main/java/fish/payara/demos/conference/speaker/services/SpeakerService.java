@@ -39,7 +39,7 @@ public class SpeakerService {
     }
     
     public boolean allNamesExists(List<String> names){
-        List<String> allNames = getAll().stream().map(Speaker::getName).collect(Collectors.toList());
+        var allNames = getAll().stream().map(Speaker::getName).collect(Collectors.toList());
         return names.stream().allMatch(allNames::contains);
     }
 }

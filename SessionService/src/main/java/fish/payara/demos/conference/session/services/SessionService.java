@@ -39,7 +39,7 @@ public class SessionService {
     
     @Transactional
     public SessionRegistration register(Session session, String user){
-        SessionRegistration registration = new SessionRegistration(session, user);
+        var registration = new SessionRegistration(session, user);
         em.persist(registration);
         em.flush();
         return registration;

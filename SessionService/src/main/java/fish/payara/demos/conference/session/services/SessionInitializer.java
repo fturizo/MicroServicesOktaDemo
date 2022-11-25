@@ -23,8 +23,9 @@ public class SessionInitializer {
     public void initialize(@Observes @Initialized(ApplicationScoped.class) Object event){
         LOG.info("Initializing sessions");
         if(sessionService.retrieveSessions().isEmpty()){
-            sessionService.addNewSession(new Session("Fun with Kubernetes and Payara Micro", "Ocarina", LocalDate.now(), Duration.ofMinutes(40)));
-            sessionService.addNewSession(new Session("Securing Microservices with Auth0 and MicroProfile", "Esperanza", LocalDate.now(), Duration.ofMinutes(40)));
+            sessionService.addNewSession(new Session("Fun with Kubernetes and Payara Micro", "Ocarina", LocalDate.now(), Duration.ofMinutes(120)));
+            sessionService.addNewSession(new Session("Securing Microservices with Okta and MicroProfile", "Esperanza", LocalDate.now(), Duration.ofMinutes(40)));
+            sessionService.addNewSession(new Session("Securing Microservices with Auth0 and MicroProfile", "Alfajor", LocalDate.now(), Duration.ofMinutes(40)));
         }
     }
 }

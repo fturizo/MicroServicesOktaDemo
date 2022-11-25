@@ -71,7 +71,7 @@ public class SpeakerResource {
         if(securityContext.isUserInRole("Speaker")){
             speaker.setIdentity(securityContext.getUserPrincipal().getName());
         }
-        Speaker result = speakerService.save(speaker);
+        var result = speakerService.save(speaker);
         return Response.created(UriBuilder.fromPath(uriInfo.getPath()).path("{id}").build(result.getId()))
                         .entity(speaker).build();
     }
@@ -80,7 +80,7 @@ public class SpeakerResource {
     @Path("/accept/{id}")
     @RolesAllowed("Admin")
     public Response acceptSpeaker(@PathParam("id") Integer id){
-        Speaker speaker = speakerService.get(id).orElseThrow(() -> new NotFoundException("Speaker not found"));
+        var speaker = speakerService.get(id).orElseThrow(() -> new NotFoundException("Speaker not found"));
         speakerService.save(speaker.accept());
         return Response.accepted().build();
     }

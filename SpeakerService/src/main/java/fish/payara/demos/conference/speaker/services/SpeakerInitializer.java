@@ -21,8 +21,8 @@ public class SpeakerInitializer {
     public void initialize(@Observes @Initialized(ApplicationScoped.class) Object event){
         LOG.info("Initializing speakers");
         if(speakerService.getAll().isEmpty()){
-            speakerService.save(new Speaker("Alan Roth", "Payara Services Ltd.").accept());
-            speakerService.save(new Speaker("Rudy Debusscher", "Payara Tech").accept());
+            speakerService.save(new Speaker("John Doe", "Payara Services Ltd.").accept());
+            speakerService.save(new Speaker("Adam Fullbright", "Payara Tech").accept());
         }
     }
 }

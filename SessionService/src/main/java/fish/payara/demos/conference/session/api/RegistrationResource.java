@@ -32,7 +32,7 @@ public class RegistrationResource {
     @POST
     @Path("/{sessionId}")
     public Response register(@PathParam("sessionId") Integer sessionId){
-        Session session = sessionService.retrieve(sessionId).orElseThrow(() -> new NotFoundException("No session found"));
+        var session = sessionService.retrieve(sessionId).orElseThrow(() -> new NotFoundException("No session found"));
         return Response.ok(sessionService.register(session, principal.getName())).build();
     }
     

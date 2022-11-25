@@ -60,7 +60,7 @@ public class SessionResource {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Integer id) {
-        Optional<Session> session = sessionService.retrieve(id);
+        var session = sessionService.retrieve(id);
         if (session.isPresent()) {
             sessionService.delete(session.get());
             return Response.accepted().build();
